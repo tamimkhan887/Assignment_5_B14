@@ -11,7 +11,7 @@ export default function Navbar() {
     }
 
     return (
-        <div className="flex justify-between items-center px-4 py-5 md:pt-5 sticky top-0 z-50 w-full max-w-7xl mx-auto" >
+        <div className="flex justify-between items-center px-4 py-5 md:pt-5 w-full max-w-7xl mx-auto" >
             <div className=" md:hidden">
                 <CiMenuBurger color="#7B7171" size={20}/>
             </div>
