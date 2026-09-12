@@ -1,3 +1,4 @@
+import Banner from "./Components/Banner";
 import Navbar from "./Components/Navbar";
 
 export default function App() {
@@ -8,7 +9,7 @@ export default function App() {
         <Navbar></Navbar>
       </div>
       <div className="max-w-7xl mx-auto">
-
+          <Banner></Banner>
       </div>
     </div>
   )
