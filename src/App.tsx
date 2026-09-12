@@ -1,7 +1,13 @@
 import Banner from "./Components/Banner";
 import Navbar from "./Components/Navbar";
+import type { iTechnologyType } from "./Types/TechnologyType";
 
 export default function App() {
+  const technologiesFetch = async():Promise<iTechnologyType> =>{
+    const res = await fetch("data.json")
+    const data = await res.json()
+    return data
+  }
 
   return (
     <div>
