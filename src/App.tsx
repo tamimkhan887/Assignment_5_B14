@@ -22,7 +22,7 @@ export default function App() {
       </div>
       <div className="max-w-7xl mx-auto">
         <Banner></Banner>
-        <Suspense fallback={<HashLoader color="#36d7b7" />}>
+        <Suspense fallback={<HashLoader color="#36d7b7" className="max-w-7xl mx-auto h-20 flex justify-center items-center"/>}>
           <Technologies technologiesPromise={technologiesPromise}></Technologies>
         </Suspense>
       </div>
