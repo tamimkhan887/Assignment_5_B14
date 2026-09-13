@@ -6,16 +6,31 @@ import { toast } from "react-toastify"
 interface YourStackProps {
     selectedTecnology: iTechnologyType[]
     setSelectedTecnology: Dispatch<SetStateAction<iTechnologyType[]>>
+    isAvailabe: string[]
+    setIsAvailable: Dispatch<SetStateAction<string[]>>
 }
 
 export default function YourStack({
     selectedTecnology,
-    setSelectedTecnology
+    setSelectedTecnology,
+    isAvailabe,
+    setIsAvailable
 }: YourStackProps) {
-    const handleDelete = (id:string):void =>{
+    const handleDelete = (id: string): void => {
         const filterArray = selectedTecnology.filter(sT => sT.id !== id)
+        const filterAvailable = isAvailabe.filter(iA => iA !== id)
         toast(`${id} removed from your stack`)
+        setIsAvailable(filterAvailable)
         setSelectedTecnology(filterArray)
+    }
+    const handleDeleteAll = () => {
+        if (selectedTecnology.length > 0) {
+            setSelectedTecnology([])
+            setIsAvailable([])
+            toast("All Technology Removed Successfully")
+        }else{
+            toast.error("No technology to delete")
+        }
     }
     return (
         <div className="border border-[#F1F5F9] p-5 rounded-2xl shadow">
@@ -46,6 +61,10 @@ export default function YourStack({
                     />
                 ))
             )}
+
+            <div onClick={() => handleDeleteAll()} className="text-center w-full border border-[#ED8C85] rounded-lg py-2">
+                <button className="text-[#D82C20] font-semibold text-sm cursor-pointer">Remove All</button>
+            </div>
         </div>
     )
 }

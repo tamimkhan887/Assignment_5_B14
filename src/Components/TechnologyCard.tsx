@@ -1,26 +1,28 @@
 
 import { FaStar } from "react-icons/fa";
 import type { iTechnologyType } from "../Types/TechnologyType";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import { toast } from "react-toastify";
 
 export interface TechnologyCardProps {
     technology: iTechnologyType;
     selectedTecnology: iTechnologyType[];
-    setSelectedTecnology: Dispatch<SetStateAction<iTechnologyType[]>>;
+    setSelectedTecnology: Dispatch<SetStateAction<iTechnologyType[]>>
+    isAvailabe: string[]
+    setIsAvailable: Dispatch<SetStateAction<string[]>>
 }
 
 const TechnologyCard = ({
     technology,
     selectedTecnology,
     setSelectedTecnology,
+    isAvailabe, setIsAvailable
 }: TechnologyCardProps) => {
-    const [isAvailabe, setIsAvailable] = useState<boolean>(false);
-
+    const isAdded = isAvailabe.includes(technology.id);
     const handleStack = () => {
         toast.success(`${technology.name} Added To Your Stack`)
-        setIsAvailable(true);
         setSelectedTecnology([...selectedTecnology, technology]);
+        setIsAvailable([...isAvailabe, technology.id]);
     };
 
     return (
@@ -66,14 +68,14 @@ const TechnologyCard = ({
 
             <button
                 onClick={handleStack}
-                disabled={isAvailabe}
-                className={`w-full py-2.5 rounded-lg plus text-xs font-semibold transition-all duration-200 ${
-                    isAvailabe
+                disabled={isAdded}
+                className={`w-full py-2.5 rounded-lg plus text-xs font-semibold ${
+                    isAdded
                         ? "bg-[#F1F5F9] text-[#64748B] border border-[#E2E8F0] cursor-not-allowed"
                         : "bg-[#0A0F1D] text-white hover:bg-[#1E293B] cursor-pointer"
                 }`}
             >
-                {isAvailabe ? "✓ Added To Stack" : "Add To Stack"}
+                {isAdded ? "✓ Added To Stack" : "Add To Stack"}
             </button>
         </div>
     );
