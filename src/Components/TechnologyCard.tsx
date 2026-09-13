@@ -1,11 +1,28 @@
+
 import { FaStar } from "react-icons/fa";
 import type { iTechnologyType } from "../Types/TechnologyType";
+import { useState, type Dispatch, type SetStateAction } from "react";
+import { toast } from "react-toastify";
 
 export interface TechnologyCardProps {
     technology: iTechnologyType;
+    selectedTecnology: iTechnologyType[];
+    setSelectedTecnology: Dispatch<SetStateAction<iTechnologyType[]>>;
 }
 
-const TechnologyCard = ({ technology }: TechnologyCardProps) => {
+const TechnologyCard = ({
+    technology,
+    selectedTecnology,
+    setSelectedTecnology,
+}: TechnologyCardProps) => {
+    const [isAvailabe, setIsAvailable] = useState<boolean>(false);
+
+    const handleStack = () => {
+        toast.success(`${technology.name} Added To Your Stack`)
+        setIsAvailable(true);
+        setSelectedTecnology([...selectedTecnology, technology]);
+    };
+
     return (
         <div className="p-5 border border-[#F1F5F9] shadow-sm rounded-2xl h-full flex flex-col">
             <div className="flex justify-between">
@@ -47,11 +64,20 @@ const TechnologyCard = ({ technology }: TechnologyCardProps) => {
                 </div>
             </div>
 
-            <button className="bg-[#0A0F1D] w-full text-white py-2.5 rounded-lg cursor-pointer plus text-xs font-medium">
-                Add To Stack
+            <button
+                onClick={handleStack}
+                disabled={isAvailabe}
+                className={`w-full py-2.5 rounded-lg plus text-xs font-semibold transition-all duration-200 ${
+                    isAvailabe
+                        ? "bg-[#F1F5F9] text-[#64748B] border border-[#E2E8F0] cursor-not-allowed"
+                        : "bg-[#0A0F1D] text-white hover:bg-[#1E293B] cursor-pointer"
+                }`}
+            >
+                {isAvailabe ? "✓ Added To Stack" : "Add To Stack"}
             </button>
         </div>
     );
 };
 
 export default TechnologyCard;
+
