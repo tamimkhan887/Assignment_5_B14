@@ -1,4 +1,3 @@
-
 import { FaStar } from "react-icons/fa";
 import type { iTechnologyType } from "../Types/TechnologyType";
 import { type Dispatch, type SetStateAction } from "react";
@@ -6,23 +5,28 @@ import { toast } from "react-toastify";
 
 export interface TechnologyCardProps {
     technology: iTechnologyType;
-    selectedTecnology: iTechnologyType[];
-    setSelectedTecnology: Dispatch<SetStateAction<iTechnologyType[]>>
-    isAvailabe: string[]
-    setIsAvailable: Dispatch<SetStateAction<string[]>>
+    setSelectedTecnology: Dispatch<SetStateAction<iTechnologyType[]>>;
+    isAvailabe: string[];
+    setIsAvailable: Dispatch<SetStateAction<string[]>>;
 }
 
 const TechnologyCard = ({
     technology,
-    selectedTecnology,
     setSelectedTecnology,
-    isAvailabe, setIsAvailable
+    isAvailabe,
+    setIsAvailable
 }: TechnologyCardProps) => {
     const isAdded = isAvailabe.includes(technology.id);
+
     const handleStack = () => {
-        toast.success(`${technology.name} Added To Your Stack`)
-        setSelectedTecnology([...selectedTecnology, technology]);
-        setIsAvailable([...isAvailabe, technology.id]);
+        if (isAdded) {
+            toast.error(`${technology.name} is already in your stack!`);
+            return;
+        }
+
+        toast.success(`${technology.name} Added To Your Stack`);
+        setSelectedTecnology((prev) => [...prev, technology]);
+        setIsAvailable((prev) => [...prev, technology.id]);
     };
 
     return (
@@ -68,13 +72,12 @@ const TechnologyCard = ({
 
             <button
                 onClick={handleStack}
-                disabled={isAdded}
-                className={`w-full py-2.5 rounded-lg plus text-xs font-semibold ${
+                className={`w-full py-2.5 rounded-lg plus text-xs font-semibold cursor-pointer transition-colors ${
                     isAdded
-                        ? "bg-[#F1F5F9] text-[#64748B] border border-[#E2E8F0] cursor-not-allowed"
-                        : "bg-[#0A0F1D] text-white hover:bg-[#1E293B] cursor-pointer"
+                        ? "bg-[#F1F5F9] text-[#64748B] border border-[#E2E8F0] hover:bg-[#E2E8F0]"
+                        : "bg-[#0A0F1D] text-white hover:bg-[#1E293B]"
                 }`}
-            >
+            >   
                 {isAdded ? "✓ Added To Stack" : "Add To Stack"}
             </button>
         </div>
@@ -82,4 +85,3 @@ const TechnologyCard = ({
 };
 
 export default TechnologyCard;
-
