@@ -4,6 +4,7 @@ import Navbar from "./Components/Navbar";
 import Technologies from "./Components/Technologies";
 import type { iTechnologyType } from "./Types/TechnologyType";
 import { HashLoader } from "react-spinners";
+import Footer from "./Components/Footer";
 
 export default function App() {
   const technologiesFetch = async (): Promise<iTechnologyType[]> => {
@@ -24,6 +25,9 @@ export default function App() {
         <Suspense fallback={<HashLoader color="#36d7b7" />}>
           <Technologies technologiesPromise={technologiesPromise}></Technologies>
         </Suspense>
+      </div>
+      <div className="border shadow-sm border-[#F1F5F9] mt-20">
+        <Footer></Footer>
       </div>
     </div>
   )
